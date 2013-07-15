@@ -20,7 +20,7 @@ local function getarg(n,arg,argtype,default)
 	end
 end
 
-function Preload(content)
+local function Preload(content)
 	Game:GetService('ContentProvider'):Preload(content)
 	return content
 end
@@ -66,7 +66,7 @@ local function Create(ty)
 end
 
 --Gets a descendant of an object by child order
-function DescendantByOrder(object,...)
+local function DescendantByOrder(object,...)
 	local children = object:GetChildren()
 	for i,v in pairs{...} do
 		object = children[v]
