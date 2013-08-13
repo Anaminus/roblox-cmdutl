@@ -3,7 +3,7 @@ PluginActivator.Initialized:connect(function()
 end)
 
 PluginActivator.Activated:connect(function()
-	ActionManager:Start()
+	ToolManager:Start()
 	print("ACTIVATE",PLUGIN_NAME,PLUGIN_VERSION)
 end)
 
