@@ -402,7 +402,7 @@ local GetBoundingBox do
 	}
 
 	-- helper for GetBoundingBox
-	local function RecurseGetBoundingBox(object,sides,parts)
+	local function recurseGetBoundingBox(object,sides,parts)
 		if object:IsA"BasePart" then
 			local mod = object.Size/2
 			local rot = object.CFrame
@@ -419,7 +419,7 @@ local GetBoundingBox do
 		end
 		local children = object:GetChildren()
 		for i = 1,#children do
-			RecurseGetBoundingBox(children[i],sides,parts)
+			recurseGetBoundingBox(children[i],sides,parts)
 		end
 	end
 
@@ -430,7 +430,7 @@ local GetBoundingBox do
 			parts = {}
 		end
 		for i = 1,#objects do
-			RecurseGetBoundingBox(objects[i],sides,parts)
+			recurseGetBoundingBox(objects[i],sides,parts)
 		end
 		return
 			Vector3.new(sides[1]-sides[2],sides[3]-sides[4],sides[5]-sides[6]),
