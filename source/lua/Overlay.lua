@@ -7,7 +7,7 @@ function CreateOverlay()
 
 	local CoreGui = Game:GetService("CoreGui")
 	local adornmentSet = {}
-	local overlayPart = Create 'Part' {
+	local overlayPart = Create('Part',{
 		Name			= "SelectionOverlay";
 		Anchored		= true;
 		CanCollide		= false;
@@ -17,7 +17,7 @@ function CreateOverlay()
 		BottomSurface	= 0;
 		Transparency	= 1;
 		Archivable		= false;
-	}
+	})
 
 	overlay.Adorn = adornmentSet
 
@@ -35,7 +35,7 @@ function CreateOverlay()
 		for k,v in pairs(props) do
 			properties[k] = v
 		end
-		local adornment = Create(class)(properties)
+		local adornment = Create(class,properties)
 		adornment.Name = name
 		if adornmentSet[name] then
 			self:RemoveAdorn(name)

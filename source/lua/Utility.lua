@@ -46,23 +46,21 @@ InternalSettings = {
 }
 
 -- Sets the properties of a new or existing Instance using values from a table.
-local function Create(ty)
-	return function(data)
-		local obj
-		if type(ty) == 'string' then
-			obj = Instance.new(ty)
-		else
-			obj = ty
-		end
-		for k, v in pairs(data) do
-			if type(k) == 'number' then
-				v.Parent = obj
-			else
-				obj[k] = v
-			end
-		end
-		return obj
+local function Create(ty,data)
+	local obj
+	if type(ty) == 'string' then
+		obj = Instance.new(ty)
+	else
+		obj = ty
 	end
+	for k, v in pairs(data) do
+		if type(k) == 'number' then
+			v.Parent = obj
+		else
+			obj[k] = v
+		end
+	end
+	return obj
 end
 
 --Gets a descendant of an object by child order
@@ -80,7 +78,7 @@ end
 A system for custom enums.
 
 API:
-	CreateEnum(string)(table)
+	CreateEnum(string,table)
 
 		Returns a new enum. This Enum is also added to the Enums table.
 
@@ -145,24 +143,22 @@ local Enums do
 			return "Enum." .. self[EnumName] .. "." .. self.Name
 		end;
 	}
-	function CreateEnum(enumName)
-		return function(t)
-			local e = {[EnumName] = enumName}
-			for i,name in pairs(t) do
-				local item = setmetatable({Name=name,Value=i,Enum=e,[EnumName]=enumName},item_mt)
-				e[i] = item
-				e[name] = item
-				e[item] = item
-			end
-			Enums[enumName] = e
-			return setmetatable(e,enum_mt)
+	function CreateEnum(enumName,t)
+		local e = {[EnumName] = enumName}
+		for i,name in pairs(t) do
+			local item = setmetatable({Name=name,Value=i,Enum=e,[EnumName]=enumName},item_mt)
+			e[i] = item
+			e[name] = item
+			e[item] = item
 		end
+		Enums[enumName] = e
+		return setmetatable(e,enum_mt)
 	end
 end
 
 -- Adds values to a class that enable it to be started and stopped.
 do
-	local enumServiceStatus = CreateEnum'ServiceStatus'{'Stopped','Started','Starting','Stopping'}
+	local enumServiceStatus = CreateEnum('ServiceStatus',{'Stopped','Started','Starting','Stopping'})
 	function AddServiceStatus(service,data)
 		local start = data.Start
 		local stop = data.Stop
